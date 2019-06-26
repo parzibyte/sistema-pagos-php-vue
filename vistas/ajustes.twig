@@ -1,0 +1,27 @@
+{% include "templates/encabezado.twig" %}
+<main id="app" role="main" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center">Ajustes</h2>
+            <b-form-group label="Mensaje en ticket" label-for="mensajeTicket">
+                <b-form-input
+                id="mensajeTicket"
+                type="text"
+                v-model="ajustes.MENSAJE_TICKET"
+                required
+                placeholder="Mensaje en ticket"
+                ></b-form-input>
+            </b-form-group>
+            <b-button :disabled="cargando" variant="success" @click="guardarAjustes">
+                <template v-if="cargando">
+                    <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+                </template>
+                <template v-if="!cargando">
+                    Guardar
+                </template>
+            </b-button>
+        </div>
+    </div>
+</main>
+<script src="{{ URL_DIRECTORIO_PUBLICO }}/js/ajustes.js?m={{CURRENT_TIME}}"></script>
+{% include "templates/pie.twig" %}

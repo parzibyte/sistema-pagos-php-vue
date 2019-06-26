@@ -1,0 +1,19 @@
+<b-modal hide-footer id="modal-editar" ref="modalEditar">
+    <h1>Agregar pago</h1>
+    <b-form-select :options="personas" class="custom-select custom-select-lg mb-3" v-model="pagoEditado.idPersona"></b-form-select>
+    <b-form-group label-for="montoPagoEditado" label="Monto">
+        <b-form-input id="montoPagoEditado" placeholder="Monto" required type="number" v-model="pagoEditado.monto"></b-form-input>
+    </b-form-group>
+    <b-form-group label-for="fechaPagoEditado" label="Fecha">
+        <b-form-input id="fechaPagoEditado" placeholder="Fecha" required type="date" v-model="pagoEditado.fecha"></b-form-input>
+    </b-form-group>
+    <b-button :disabled="estaGuardando" @click="cerrarModalEditar" size="lg" variant="danger">Cancelar</b-button>
+    <b-button :disabled="estaGuardando" @click="actualizar" size="lg" variant="success">
+        <template v-if="estaGuardando">
+            <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+        </template>
+        <template v-if="!estaGuardando">
+            Guardar
+        </template>
+    </b-button>
+</b-modal>

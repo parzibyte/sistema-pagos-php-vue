@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="ie=edge" http-equiv="X-UA-Compatible">
+        <title>{{NOMBRE_APLICACION}}</title>
+        <link rel="stylesheet" href="{{ URL_DIRECTORIO_PUBLICO }}/css/fa.min.css">
+
+        <link type="text/css" rel="stylesheet" href="{{ URL_DIRECTORIO_PUBLICO }}/css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="{{ URL_DIRECTORIO_PUBLICO }}/css/bootstrap-vue.min.css"/>
+        <script src="{{ URL_DIRECTORIO_PUBLICO }}/js/vue.min.js"></script>
+        <script src="{{ URL_DIRECTORIO_PUBLICO }}/js/vee-validate.min.js"></script>
+        <script src="{{ URL_DIRECTORIO_PUBLICO }}/js/bootstrap-vue.min.js"></script>
+        <script src="{{ URL_DIRECTORIO_PUBLICO }}/js/es.js"></script>
+        <script>
+            const RUTA_API = "{{ RUTA_API }}";
+            Vue.use(VeeValidate, {
+                classes: true,
+                classNames: {
+                    valid: "is-valid",
+                    invalid: "is-invalid"
+                },
+                events: ""
+            });
+            VeeValidate.Validator.localize("es");
+        </script>
+        <style>
+            body {
+                padding-top: 70px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="#">{{NOMBRE_APLICACION}}</a>
+            <button aria-label="Mostrar u ocultar menú" class="navbar-toggler" id="botonMenu" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mr-auto">
+                    {% if USUARIO_LOGUEADO %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ URL_RAIZ }}/pagos">Pagos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ URL_RAIZ }}/personas">Personas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ URL_RAIZ }}/usuarios">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ URL_RAIZ }}/logout">
+                                Salir ({{USUARIO_LOGUEADO}})</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ URL_RAIZ }}/login">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript">
+            // Tomado de https://github.com/parzibyte/cotizaciones_web/blob/master/js/cotizaciones.js#L2
+            document.addEventListener("DOMContentLoaded", () => {
+                const menu = document.querySelector("#menu"),
+                    botonMenu = document.querySelector("#botonMenu");
+                if (menu) {
+                    botonMenu.addEventListener("click", () => menu.classList.toggle("show"));
+                }
+            });
+        </script>
+    </body>
+</html>

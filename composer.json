@@ -1,0 +1,19 @@
+{
+    "name": "parzibyte/boilerplate_php",
+    "description": "Plantilla base para desarrollar con PHP y Vue",
+    "type": "project",
+    "require": {
+        "phroute/phroute": "^2.1",
+        "twig/twig": "^2.0",
+        "mike42/escpos-php": "^2.1"
+    },
+    "authors": [{
+        "name": "Luis Cabrera Benito",
+        "email": "parzibyte@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Parzibyte\\": "app/"
+        }
+    }
+}

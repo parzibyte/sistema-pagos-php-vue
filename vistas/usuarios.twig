@@ -1,0 +1,71 @@
+{% include "templates/encabezado.twig" %}
+<main class="container-fluid" id="app" role="main">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">Usuarios</h1>
+        </div>
+        <div class="col-12">
+            <b-button class="mb-1" v-b-modal.modal-agregar-usuario variant="success">Agregar</b-button>
+        </div>
+        <div class="col-12">
+            <b-table :fields="encabezadoUsuarios" :items="usuarios" hover striped>
+                <template slot-scope="fila" slot="editar">
+                    <b-button @click="mostrarModalCambioDePalabraSecreta(fila.item)" variant="warning">
+                        <i class="fas fa-edit"></i>
+                    </b-button>
+                </template>
+                <template slot-scope="fila" slot="eliminar">
+                    <b-button @click="eliminarUsuario(fila.item)" variant="danger">
+                        <i class="fas fa-trash"></i>
+                    </b-button>
+                </template>
+            </b-table>
+        </div>
+    </div>
+
+    <b-modal hide-footer id="modal-agregar-usuario" ref="modalAgregarUsuario">
+        <h1>Agregar usuario</h1>
+        <b-form-group label-for="correoNuevoUsuario" label="Correo electrónico">
+            <b-form-input id="correoNuevoUsuario" placeholder="Correo electrónico del usuario" required type="email" v-model="nuevoUsuario.correo"></b-form-input>
+        </b-form-group>
+        <b-form-group label-for="palabraSecretaNuevoUsuario" label="Contraseña">
+            <b-form-input id="palabraSecretaNuevoUsuario" placeholder="Contraseña del usuario" required type="password" v-model="nuevoUsuario.palabraSecreta"></b-form-input>
+        </b-form-group>
+        <b-form-group label-for="palabraSecretaConfirmarNuevoUsuario" label="Confirmar contraseña">
+            <b-form-input id="palabraSecretaConfirmarNuevoUsuario" placeholder="Confirmar contraseña del usuario" required type="password" v-model="nuevoUsuario.palabraSecretaConfirmar"></b-form-input>
+        </b-form-group>
+        <b-button :disabled="guardandoUsuario" @click="cerrarModalNuevoUsuario" size="lg" variant="danger">Cancelar</b-button>
+        <b-button :disabled="guardandoUsuario" @click="guardarUsuario" size="lg" variant="success">
+            <template v-if="guardandoUsuario">
+                <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+            </template>
+            <template v-if="!guardandoUsuario">
+                Guardar
+            </template>
+        </b-button>
+    </b-modal>
+    <b-modal hide-footer ref="modalCambiarPalabraSecretaUsuario">
+        <h1>Cambiar contraseña</h1>
+        <b-form-group label-for="palabraSecretaActual" label="Contraseña actual">
+            <b-form-input id="palabraSecretaActual" placeholder="Contraseña actual" required type="password" v-model="usuarioEditado.palabraSecretaActual"></b-form-input>
+        </b-form-group>
+        <b-form-group label-for="nuevaPalabraSecreta" label="Nueva contraseña">
+            <b-form-input id="nuevaPalabraSecreta" placeholder="Escribe la nueva contraseña" required type="password" v-model="usuarioEditado.palabraSecretaNueva"></b-form-input>
+        </b-form-group>
+        <b-form-group label-for="nuevaPalabraSecretaConfirmar" label="Confirmar nueva contraseña">
+            <b-form-input id="nuevaPalabraSecretaConfirmar" placeholder="Confirma la nueva contraseña" required type="password" v-model="usuarioEditado.palabraSecretaNuevaConfirmar"></b-form-input>
+        </b-form-group>
+        <b-button :disabled="guardandoUsuario" @click="cerrarModalCambiarPalabraSecreta" size="lg" variant="danger">Cancelar</b-button>
+        <b-button :disabled="guardandoUsuario" @click="cambiarPalabraSecreta" size="lg" variant="success">
+            <template v-if="guardandoUsuario">
+                <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+            </template>
+            <template v-if="!guardandoUsuario">
+                Guardar
+            </template>
+        </b-button>
+    </b-modal>
+</main>
+<script src="{{URL_DIRECTORIO_PUBLICO}}/js/usuarios.js?l={{TIEMPO_ACTUAL}}"></script>
+
+{% include "templates/pie.twig" %}

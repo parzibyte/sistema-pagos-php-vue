@@ -1,0 +1,44 @@
+{% include "templates/encabezado.twig" %}
+<main class="container-fluid" id="app" role="main">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">Pagos</h1>
+        </div>
+        <div class="col-12">
+            <b-button class="mb-1" v-b-modal.modal-agregar variant="success">Agregar</b-button>
+        </div>
+        <div class="col-12">
+            <h3 class="text-center">Total:
+                {% verbatim %}
+                    {{total}}
+                {% endverbatim %}
+            </h3>
+        </div>
+        <div class="col-12 table-responsive">
+            <b-table :fields="encabezadoPagos" :items="pagos" hover striped>
+                <template slot-scope="fila" slot="imprimir">
+                    <b-button @click="imprimir(fila.item)" variant="primary">
+                        <i class="fas fa-print"></i>
+                    </b-button>
+                </template>
+                <template slot-scope="fila" slot="editar">
+                    <b-button @click="mostrarModalEditar(fila.item)" variant="warning">
+                        <i class="fas fa-edit"></i>
+                    </b-button>
+                </template>
+                <template slot-scope="fila" slot="eliminar">
+                    <b-button @click="eliminarPago(fila.item)" variant="danger">
+                        <i class="fas fa-trash"></i>
+                    </b-button>
+                </template>
+            </b-table>
+        </div>
+    </div>
+    {% include "pagos/agregar_pago.twig" %}
+    {% include "pagos/editar_pago.twig" %}
+
+
+</main>
+<script src="{{URL_DIRECTORIO_PUBLICO}}/js/pagos.js?l={{TIEMPO_ACTUAL}}"></script>
+
+{% include "templates/pie.twig" %}

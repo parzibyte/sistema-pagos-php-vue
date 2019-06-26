@@ -1,0 +1,38 @@
+
+{% include "templates/encabezado.twig" %}
+<main id="app" role="main" class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 offset-lg-4 col-12">
+            <h2 class="text-center">Iniciar sesión</h2>
+            <b-form-group label="Correo electrónico" label-for="correoUsuario">
+                <b-form-input
+                id="correoUsuario"
+                type="email"
+                v-model="usuario.correo"
+                required
+                placeholder="Correo electrónico"
+                ></b-form-input>
+            </b-form-group>
+            <b-form-group label="Contraseña" label-for="palabraSecreta">
+                <b-form-input
+                type="password"
+                id="palabraSecreta"
+                v-model="usuario.palabraSecreta"
+                required
+                placeholder="Contraseña del usuario"
+                ></b-form-input>
+            </b-form-group>
+            <b-button :disabled="cargando" variant="success" @click="iniciarSesion">
+                <template v-if="cargando">
+                    <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+                </template>
+                <template v-if="!cargando">
+                    Entrar
+                </template>
+            </b-button>
+        </div>
+    </div>
+</main>
+<script src="{{URL_DIRECTORIO_PUBLICO}}/js/login.js?l={{TIEMPO_ACTUAL}}"></script>
+
+{% include "templates/pie.twig" %}

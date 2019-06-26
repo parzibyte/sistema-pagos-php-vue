@@ -1,0 +1,75 @@
+{% include "templates/encabezado.twig" %}
+<main id="app" role="main" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">Personas</h1>
+        </div>
+        <div class="col-12">
+            <b-button 
+            class="mb-1" 
+            v-b-modal.modal-agregar-persona
+            variant="success"
+            >Agregar</b-button>        
+        </div>
+        <div class="col-12">
+            <b-table striped hover :fields="encabezadoPersonas" :items="personas">
+                <template slot="editar" slot-scope="fila">
+                    <b-button variant="warning" @click="mostrarModalActualizarPersona(fila.item)">
+                        <i class="fas fa-edit"></i>
+                    </b-button>
+                </template>
+                <template slot="eliminar" slot-scope="fila">
+                    <b-button variant="danger" @click="eliminarPersona(fila.item)">
+                        <i class="fas fa-trash"></i>
+                    </b-button>
+                </template>
+            </b-table>
+        </div>
+    </div>
+
+    <b-modal hide-footer ref="modalAgregarPersona" id="modal-agregar-persona">
+        <h1>Agregar persona</h1>
+        <b-form-group label="Nombre" label-for="nombreNuevaPersona">
+            <b-form-input
+            id="nombreNuevaPersona"
+            type="text"
+            v-model="nuevaPersona.nombre"
+            required
+            placeholder="Nombre completo"
+            ></b-form-input>
+        </b-form-group>
+        <b-button size="lg" :disabled="guardandoPersona" variant="danger" @click="cerrarModalNuevaPersona">Cancelar</b-button>
+        <b-button size="lg" :disabled="guardandoPersona" variant="success" @click="guardarPersona">
+            <template v-if="guardandoPersona">
+            <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+            </template>
+            <template v-if="!guardandoPersona">
+            Guardar
+            </template>
+        </b-button>
+    </b-modal>
+    <b-modal hide-footer ref="modalEditarPersona">
+        <h1>Actualizar persona</h1>
+        <b-form-group label="Nombre" label-for="nombrePersonaEditada">
+            <b-form-input
+            type="text"
+            id="nombrePersonaEditada"
+            v-model="personaEditada.nombre"
+            required
+            placeholder="Nombre completo"
+            ></b-form-input>
+        </b-form-group>
+        <b-button size="lg" :disabled="guardandoPersona" variant="danger" @click="cerrarModalEditarPersona">Cancelar</b-button>
+        <b-button size="lg" :disabled="guardandoPersona" variant="success" @click="actualizarPersona">
+            <template v-if="guardandoPersona">
+            <i class="fas fa-spinner fa-spin"></i>&nbsp;Cargando
+            </template>
+            <template v-if="!guardandoPersona">
+            Guardar
+            </template>
+        </b-button>
+    </b-modal>
+</main>
+<script src="{{URL_DIRECTORIO_PUBLICO}}/js/personas.js?l={{TIEMPO_ACTUAL}}"></script>
+
+{% include "templates/pie.twig" %}
