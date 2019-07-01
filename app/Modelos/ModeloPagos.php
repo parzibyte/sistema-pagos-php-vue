@@ -11,10 +11,21 @@ class ModeloPagos
 
     public static function agregar($idPersona, $monto, $fecha)
     {
-        $hash = Comun::generarTokenAleatorioSeguro(10);
+        $hash = self::obtenerHashUnico();
         $bd = BD::obtener();
         $sentencia = $bd->prepare("insert into pagos(id_persona, monto, fecha, hash) values (?, ?, ?, ?)");
         return $sentencia->execute([$idPersona, $monto, $fecha, $hash]);
+    }
+
+    private static function obtenerHashUnico()
+    {
+        $bd = BD::obtener();
+        $sentencia = $bd->prepare("select id from pagos where hash = ? limit 1");
+        do {
+            $hash = Comun::generarTokenAleatorioSeguro(10);
+            $sentencia->execute([$hash]);
+        } while ($sentencia->fetchObject());
+        return $hash;
     }
 
     public static function eliminar($idPago)
@@ -30,7 +41,8 @@ class ModeloPagos
         $sentencia = $bd->prepare("select pa.id, pa.id_persona as idPersona, pa.monto, pa.fecha,
         pa.hash, p.nombre as persona
         from pagos pa
-        inner join personas p on p.id = pa.id_persona;");
+        inner join personas p on p.id = pa.id_persona
+        order by pa.fecha desc;");
         $sentencia->execute();
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }

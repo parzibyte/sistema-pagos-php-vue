@@ -30,7 +30,7 @@ create table pagos(
     id_persona bigint unsigned,
     monto decimal(9, 2) not null,
     fecha date not null,
-    hash varchar(10) not null,
+    hash varchar(10) not null unique,
     primary key(id),
     foreign key(id_persona) references personas(id)
 );
