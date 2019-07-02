@@ -15,6 +15,9 @@ class ControladorUsuarios
 
     public static function actualizarPalabraSecreta()
     {
+        if (Comun::env("DENEGAR_USUARIOS", false)) {
+            return json(true);
+        }
         $datos = json_decode(file_get_contents("php://input"));
         return json(ModeloUsuarios::actualizarPalabraSecreta($datos->id, $datos->palabraSecretaActual));
     }
