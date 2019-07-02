@@ -33,3 +33,5 @@ NOMBRE_IMPRESORA = "POS-58"
 ; si estuviera en https://parzibyte.me/apps/app/index.php
 ; el offset sería 3
 OFFSET_RUTAS = 2
+; Denegar la creación o eliminación de usuarios, útil para ambientes de prueba
+DENEGAR_USUARIOS=false
