@@ -24,14 +24,14 @@ class ModeloUsuarios
         return password_hash(md5($palabraSecreta), PASSWORD_BCRYPT);
     }
 
-    public static function actualizarPalabraSecreta($id, $palabraSecretaActual)
+    public static function actualizarPalabraSecreta($id, $palabraSecretaActual, $palabraSecretaNueva)
     {
         if (!self::coincideUsuarioYPassPorId($id, $palabraSecretaActual)) {
             return false;
         }
 
         $bd = BD::obtener();
-        $palabraSecretaCifrada = self::cifrarPalabraSecreta($datos->palabraSecretaNueva);
+        $palabraSecretaCifrada = self::cifrarPalabraSecreta($palabraSecretaNueva);
         $sentencia = $bd->prepare("update usuarios set palabra_secreta = ? where id = ?");
         return $sentencia->execute([$palabraSecretaCifrada, $id]);
     }
