@@ -4,7 +4,7 @@
     "type": "project",
     "require": {
         "phroute/phroute": "^2.1",
-        "twig/twig": "^2.0",
+        "twig/twig": "^3.11",
         "mike42/escpos-php": "^2.1"
     },
     "authors": [{
